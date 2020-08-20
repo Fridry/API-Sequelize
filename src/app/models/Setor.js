@@ -17,7 +17,6 @@ class Setor extends Model {
   static associate(models) {
     this.hasMany(models.Usuario, {
       foreignKey: "id",
-      as: "usuario",
     });
   }
 }

@@ -4,32 +4,57 @@ class Usuario extends Model {
   static init(sequelize) {
     super.init(
       {
-        nome: DataTypes.STRING,
-        data_nascimento: {
-          type: DataTypes.DATEONLY,
-          isDate: {
-            args: true,
-            msg: "Data de nascimento inválida.",
+        nome: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          validate: {
+            notEmpty: {
+              msg: "O campo não pode ser vazio.",
+            },
           },
         },
+
+        data_nascimento: {
+          type: DataTypes.DATEONLY,
+          validate: {
+            notEmpty: true,
+            isDate: {
+              msg: "Data de nascimento inválida.",
+            },
+          },
+        },
+
         cpf: {
           type: DataTypes.INTEGER,
           unique: true,
-          len: {
-            args: [11],
-            msg: "CPF inválido.",
+          validate: {
+            notEmpty: true,
+            len: {
+              args: [11, 11],
+              msg: "CPF inválido.",
+            },
           },
         },
+
         telefone: {
           type: DataTypes.INTEGER,
-          min: 9,
+          validate: {
+            notEmpty: true,
+            len: {
+              args: [9, 14],
+              msg: "Número inválido.",
+            },
+          },
         },
+
         email: {
           type: DataTypes.STRING,
           unique: true,
-          isEmail: {
-            args: true,
-            msg: "Email inválido.",
+          validate: {
+            notEmpty: true,
+            isEmail: {
+              msg: "Email inválido.",
+            },
           },
         },
       },
